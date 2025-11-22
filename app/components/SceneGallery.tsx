@@ -6,12 +6,11 @@ import AudioPlayer from './AudioPlayer';
 import VideoPlayer from './VideoPlayer';
 import VideoStill from './VideoStill';
 import { ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
-import QualityMetrics from './QualityMetrics';
 
 type Scene = typeof scenes.scenes[0];
 
 export default function SceneGallery() {
- const [selectedScene, setSelectedScene] = useState<Scene | null>(null);
+  const [selectedScene, setSelectedScene] = useState<Scene | null>(null);
   const [currentSceneIndex, setCurrentSceneIndex] = useState(0);
   const [showMagic, setShowMagic] = useState(false);
   const [syncStatus, setSyncStatus] = useState('Ready for transformation');
@@ -361,9 +360,6 @@ export default function SceneGallery() {
                           </div>
                         </div>
                       )}
-
-                      {/* Professional Quality Metrics */}
-                      <QualityMetrics sceneData={selectedScene} />
                     </>
                   )}
                 </div>

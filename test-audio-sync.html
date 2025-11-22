@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+<video id="testVideo" controls muted>
+  <source src="/videos/sample.mp4" type="video/mp4">
+</video>
+<audio id="testAudio" controls>
+  <source src="/audio/sample.mp3" type="audio/mpeg">
+</audio>
+<script>
+// Test basic sync functionality
+const video = document.getElementById('testVideo');
+const audio = document.getElementById('testAudio');
+
+audio.addEventListener('play', () => {
+  console.log('Audio playing - video should follow');
+  video.play();
+});
+
+audio.addEventListener('timeupdate', () => {
+  if (Math.abs(video.currentTime - audio.currentTime) > 0.1) {
+    video.currentTime = audio.currentTime;
+  }
+});
+</script>
+</body>
+</html>

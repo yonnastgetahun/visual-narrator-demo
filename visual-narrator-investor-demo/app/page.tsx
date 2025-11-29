@@ -44,7 +44,7 @@ export default function Home() {
         </div>
 
         {/* Scene Gallery */}
-        <SceneGallery />
+        <div>Scene Gallery Coming Soon</div>
 
         {/* Business Calculator Toggle */}
         <div className="text-center mt-16">

@@ -26,7 +26,7 @@ function useEngine() {
       setPerformance(status.capabilities);
     } catch (err) {
       setEngineStatus('offline');
-      setError(err.message);
+      setError(err instanceof Error ? err.message : 'Unknown error');
     }
   };
 
@@ -35,7 +35,7 @@ function useEngine() {
       const analysis = await EngineClient.analyzeFrame(videoPath, timestamp);
       return analysis;
     } catch (err) {
-      setError(err.message);
+      setError(err instanceof Error ? err.message : 'Unknown error');
       throw err;
     }
   };
@@ -45,7 +45,7 @@ function useEngine() {
       const demo = await EngineClient.getGameOfThronesDemo();
       return demo;
     } catch (err) {
-      setError(err.message);
+      setError(err instanceof Error ? err.message : 'Unknown error');
       throw err;
     }
   };

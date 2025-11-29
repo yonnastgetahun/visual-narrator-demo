@@ -11,9 +11,9 @@ import { EngineClient } from '../../lib/engine-client';
 
 // Custom hook for engine integration
 function useEngine() {
-  const [engineStatus, setEngineStatus] = useState('checking');
-  const [performance, setPerformance] = useState(null);
-  const [error, setError] = useState(null);
+  const [engineStatus, setEngineStatus] = useState<string>('checking');
+  const [performance, setPerformance] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     checkEngineHealth();
@@ -69,8 +69,8 @@ const EngineDemo = () => {
     getDemoData 
   } = useEngine();
   
-  const [demoData, setDemoData] = useState(null);
-  const [currentAnalysis, setCurrentAnalysis] = useState(null);
+  const [demoData, setDemoData] = useState<any>(null);
+  const [currentAnalysis, setCurrentAnalysis] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {

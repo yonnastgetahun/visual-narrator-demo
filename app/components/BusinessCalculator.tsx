@@ -11,10 +11,19 @@ interface CalculationResult {
   ourCost: number;
 }
 
+type Tier = 'premium' | 'standard' | 'free';
+type CurrentSolution = 'human' | 'api' | 'none';
+
+const tierOptions: Array<{ id: Tier; label: string; price: string; color: string }> = [
+  { id: 'premium', label: 'Premium', price: '$5.00/min', color: 'bg-blue-600' },
+  { id: 'standard', label: 'Standard', price: '$1.00/min', color: 'bg-green-600' },
+  { id: 'free', label: 'Free', price: '$0.00/min', color: 'bg-gray-600' }
+];
+
 export default function BusinessCalculator() {
   const [librarySize, setLibrarySize] = useState(1000);
-  const [tier, setTier] = useState<'premium' | 'standard' | 'free'>('premium');
-  const [currentSolution, setCurrentSolution] = useState<'human' | 'api' | 'none'>('human');
+  const [tier, setTier] = useState<Tier>('premium');
+  const [currentSolution, setCurrentSolution] = useState<CurrentSolution>('human');
 
   const calculateResults = (): CalculationResult => {
     const minutes = librarySize * 60;
@@ -97,14 +106,10 @@ export default function BusinessCalculator() {
               Service Tier
             </label>
             <div className="grid grid-cols-3 gap-2">
-              {[
-                { id: 'premium', label: 'Premium', price: '$5.00/min', color: 'bg-blue-600' },
-                { id: 'standard', label: 'Standard', price: '$1.00/min', color: 'bg-green-600' },
-                { id: 'free', label: 'Free', price: '$0.00/min', color: 'bg-gray-600' }
-              ].map((option) => (
+              {tierOptions.map((option) => (
                 <button
                   key={option.id}
-                  onClick={() => setTier(option.id as any)}
+                  onClick={() => setTier(option.id)}
                   className={`p-3 rounded-lg border-2 text-center transition-all ${
                     tier === option.id 
                       ? 'border-blue-500 bg-blue-50' 
@@ -124,7 +129,7 @@ export default function BusinessCalculator() {
             </label>
             <select
               value={currentSolution}
-              onChange={(e) => setCurrentSolution(e.target.value as any)}
+              onChange={(e) => setCurrentSolution(e.target.value as CurrentSolution)}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
               <option value="human">Human Writers ($30.00/min)</option>

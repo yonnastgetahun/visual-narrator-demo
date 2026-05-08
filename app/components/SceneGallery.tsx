@@ -201,7 +201,7 @@ export default function SceneGallery() {
                   />
 
                   {/* Audio Player - Shows after magic */}
-                  {showMagic && selectedScene.ourSolution.audioUrl && videoRef.current && (
+                  {showMagic && selectedScene.ourSolution.audioUrl && (
                     <AudioPlayer 
                       audioUrl={selectedScene.ourSolution.audioUrl}
                       videoRef={videoRef}

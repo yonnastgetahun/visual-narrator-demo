@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 
 interface YouTubePlayerProps {
   videoId: string;
@@ -11,7 +11,7 @@ interface YouTubePlayerProps {
 
 export default function YouTubePlayer({ videoId, startTime, endTime, title }: YouTubePlayerProps) {
   const playerRef = useRef<HTMLDivElement>(null);
-  const [player, setPlayer] = useState<any>(null);
+  const youtubePlayerRef = useRef<YouTubePlayerInstance | null>(null);
 
   useEffect(() => {
     // Load YouTube IFrame API
@@ -20,9 +20,8 @@ export default function YouTubePlayer({ videoId, startTime, endTime, title }: Yo
     const firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
 
-    // @ts-ignore
     window.onYouTubeIframeAPIReady = () => {
-      const newPlayer = new (window as any).YT.Player(playerRef.current, {
+      const newPlayer = new window.YT.Player(playerRef.current, {
         videoId: videoId,
         playerVars: {
           start: startTime,
@@ -33,23 +32,20 @@ export default function YouTubePlayer({ videoId, startTime, endTime, title }: Yo
         },
         events: {
           onReady: () => {
-            setPlayer(newPlayer);
+            youtubePlayerRef.current = newPlayer;
           }
         }
       });
     };
 
     return () => {
-      if (player) {
-        player.destroy();
-      }
+      youtubePlayerRef.current?.destroy();
+      youtubePlayerRef.current = null;
     };
   }, [videoId, startTime, endTime]);
 
   const playVideo = () => {
-    if (player) {
-      player.playVideo();
-    }
+    youtubePlayerRef.current?.playVideo();
   };
 
   return (
@@ -68,4 +64,27 @@ export default function YouTubePlayer({ videoId, startTime, endTime, title }: Yo
       </div>
     </div>
   );
+}
+
+type YouTubePlayerInstance = {
+  playVideo: () => void;
+  destroy: () => void;
+};
+
+declare global {
+  interface Window {
+    onYouTubeIframeAPIReady?: () => void;
+    YT: {
+      Player: new (
+        element: HTMLElement | null,
+        options: {
+          videoId: string;
+          playerVars: Record<string, number>;
+          events: {
+            onReady: () => void;
+          };
+        },
+      ) => YouTubePlayerInstance;
+    };
+  }
 }

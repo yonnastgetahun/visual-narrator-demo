@@ -1,10 +1,10 @@
 import { Suspense } from "react";
-import BenchmarkDemo from "./components/BenchmarkDemo";
+import BenchmarkDemo from "@/app/components/BenchmarkDemo";
 
-export default function Home() {
+export default function BenchmarkEmbedPage() {
   return (
     <Suspense fallback={<div className="min-h-screen bg-[#101417]" />}>
-      <BenchmarkDemo />
+      <BenchmarkDemo embed />
     </Suspense>
   );
 }

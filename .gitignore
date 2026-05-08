@@ -1,3 +1,17 @@
 .vercel
+.next
+node_modules
+.DS_Store
+
+# Local backups / generated working directories
+app_backup/
+public_backup/
+audio-production/
+app/test-skeleton/
+app.py
+verify_security.sh
+VN-001-CONTINUATION.md
+
+# Large media
 *.mp4
 *.mov
